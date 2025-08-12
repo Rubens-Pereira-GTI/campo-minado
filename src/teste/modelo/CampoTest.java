@@ -1,16 +1,17 @@
-package br.com.cod3r.cm.modelo;
+package teste.modelo;
 
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import br.com.cod3r.cm.excecao.ExplosaoException;
+import br.com.cod3r.cm.modelo.Campo;
 
 public class CampoTest {
-        private Campo campo;
+    private Campo campo;
 
     @BeforeEach
     void iniciarCampo(){
@@ -75,7 +76,6 @@ public class CampoTest {
     @Test
     void testeValorPadraoAtributoMarcado(){
         assertFalse(campo.isMarcado());        
-        
     }
     @Test
     void testeAltenarMarcacao(){
@@ -141,5 +141,4 @@ public class CampoTest {
         assertTrue(campo22.isAberto() && campo11.isFechado());
 
     }
-
 }

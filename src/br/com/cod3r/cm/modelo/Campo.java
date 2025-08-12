@@ -46,13 +46,13 @@ public class Campo {
     }
 
     //lógica de alternancia de marcação
-    void alternarMarcacao(){
+    public void alternarMarcacao(){
         if(!aberto){
             marcado = !marcado;
         } 
     }
 
-    boolean abrir(){
+    public boolean abrir(){
         if(!aberto && !marcado ){
             aberto = true;
             if(minado){
@@ -70,11 +70,11 @@ public class Campo {
         }
     }
 
-    boolean vizinhancaSegura(){
+    public boolean vizinhancaSegura(){
         return vizinhos.stream().noneMatch(vizinho -> vizinho.minado);
     }
 
-    void minar(){
+    public void minar(){
         minado = true;
     }
 
@@ -88,6 +88,48 @@ public class Campo {
 
     public boolean isFechado(){
         return !aberto;
+    }
+
+
+    public int getLinha() {
+        return linha;
+    }
+
+
+    public int getColuna() {
+        return coluna;
+    }
+
+    boolean objetivoAlcancado(){
+        boolean desvendado = !minado && aberto;
+        boolean protegido = minado && isFechado();
+        return desvendado || protegido;
+    }
+
+    long minasNaVizinhaca(){
+        return vizinhos.stream().filter(v -> v.minado).count();
+    }
+
+    void reiniciar(){
+        aberto = false;
+        minado = false;
+        marcado = false;
+    }
+
+    public String toString(){
+        if(isMarcado()){
+            return "x";
+        }else if(isAberto() && minado){
+            return "*";
+        }else if(isAberto() && minasNaVizinhaca() > 0){
+            return Long.toString(minasNaVizinhaca());
+        }else if(isAberto()){
+            return "";
+        }else{
+            //se não cair em menhum condicional é pq ele está fechado
+            return "?";
+        }       
+        
     }
   
 }
