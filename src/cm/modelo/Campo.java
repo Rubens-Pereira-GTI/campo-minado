@@ -3,12 +3,12 @@ package cm.modelo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import cm.modelo.excecao.*;
+import cm.excecao.*;
 
 // esse o codigo personalizado por mim. 
 public class Campo {
    
+    // Temos aqui todas as variáveis de instância
     private final int linha;
     private final int coluna;
     private boolean aberto= false;
@@ -16,17 +16,24 @@ public class Campo {
     private boolean marcado = false;
     private List<Campo> listaCamposVizinhos = new ArrayList<>();
 
+    // Temos o construtor que será iniciado com dois atributos 
     public Campo(int linha, int coluna){
         this.linha = linha;
         this.coluna = coluna;
     }
 
     // esse método é responsável por dizer quais os listaCamposVizinhos do bloco
-    public boolean addVizinho(Campo campo){               
+    public boolean addVizinho(Campo campo){         
+        /*
+        A lógica é ter um delta, um valor que repsenta a distância onde um delta de 
+        1 e 2 represanta que são vizinhos e para obtermos esse delta 
+        subtraimos coluna - coluna e linha - linha de dois campos.        
+        */
         int deltaLinha = Math.abs(linha - campo.linha);
         int deltaColuna = Math.abs(coluna - campo.coluna);
         int deltaGeral = deltaColuna + deltaLinha;
 
+        //aqui estamos verificando e adicionado se são vizinhos
         if(deltaGeral == 1 || deltaGeral == 2){
             listaCamposVizinhos.add(campo);
             return true;
@@ -42,10 +49,9 @@ public class Campo {
 
     //abre o campo e os campos vizinhos ou diz se está minado
     boolean abrir(){
-        //checa se o campo está aberto ou feixado, se estiver feixado ele abre o campo
-        if((aberto ==false) && (marcado == false)){
+        //se o campo está fechado e não marcado, abre o campo
+        if((isFechado()) && (marcado == false)){
             aberto = true;
-
             //verificar se o campo tem bomba e lançar uma exceção caso tenha
             if(minado){
                 throw new ExplosaoException();
@@ -57,12 +63,7 @@ public class Campo {
                 listaCamposVizinhos.stream().forEach(cv -> cv.abrir());
             }
 
-        }
-
-            
-            
-           
-            
+        }              
         
         return false;
     }
@@ -74,6 +75,9 @@ public class Campo {
     }
 
 
+    boolean isFechado(){
+        return !aberto;
+    }
 
    
   

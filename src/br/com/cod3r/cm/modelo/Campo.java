@@ -22,7 +22,7 @@ public class Campo {
 
     public boolean addVizinho(Campo vizinho){  
         //Logica para saber se o vizinho é do tipo Cruz ou diagonal 
-        System.out.println(linha +"L L " + vizinho.linha );     
+        //System.out.println(linha +"L L " + vizinho.linha );     
         boolean vizinhoLinhaDiferente = linha != vizinho.linha;
         boolean vizinhoColunaDiferente = coluna != vizinho.coluna;
         boolean vizinhoDiagonal = vizinhoColunaDiferente && vizinhoLinhaDiferente;
@@ -31,7 +31,7 @@ public class Campo {
         int deltaLinha = Math.abs(vizinho.linha - linha);
         int deltaColuna = Math.abs(vizinho.coluna - coluna);
         int deltaGeral = deltaColuna + deltaLinha;
-        System.out.println( deltaLinha +" DL e DC "+ deltaColuna);
+        //System.out.println( deltaLinha +" DL e DC "+ deltaColuna);
         if(deltaGeral == 1 && !vizinhoDiagonal){
             vizinhos.add(vizinho);
             return true;
@@ -86,8 +86,17 @@ public class Campo {
         return aberto;
     }
 
+    void setAberto(boolean aberto) {
+        this.aberto = aberto;
+    }
+
+
     public boolean isFechado(){
         return !aberto;
+    }
+
+    public boolean isMinado(){
+        return minado;
     }
 
 
@@ -100,17 +109,17 @@ public class Campo {
         return coluna;
     }
 
-    boolean objetivoAlcancado(){
+    public boolean objetivoAlcancado(){
         boolean desvendado = !minado && aberto;
-        boolean protegido = minado && isFechado();
+        boolean protegido = minado && marcado;
         return desvendado || protegido;
     }
 
-    long minasNaVizinhaca(){
+    public long minasNaVizinhaca(){
         return vizinhos.stream().filter(v -> v.minado).count();
     }
 
-    void reiniciar(){
+    public void reiniciar(){
         aberto = false;
         minado = false;
         marcado = false;
@@ -124,7 +133,7 @@ public class Campo {
         }else if(isAberto() && minasNaVizinhaca() > 0){
             return Long.toString(minasNaVizinhaca());
         }else if(isAberto()){
-            return "";
+            return " ";
         }else{
             //se não cair em menhum condicional é pq ele está fechado
             return "?";

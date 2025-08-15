@@ -1,4 +1,4 @@
-package cm.modelo.excecao;
+package cm.excecao;
 
 public class ExplosaoException extends RuntimeException {
     
