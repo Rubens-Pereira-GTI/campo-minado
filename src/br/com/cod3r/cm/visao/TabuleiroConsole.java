@@ -53,7 +53,7 @@ public class TabuleiroConsole {
                 digitado= capturarValorDigitado("1 - Abrir ou 2 - (Des)Marcar:");
                 if("1".equals(digitado)){
                     tabuleiro.abrir(xy.next(), xy.next());
-                }else if("2".equals(xy)){
+                }else if("2".equals(digitado)){
                     tabuleiro.alternarMarcacao(xy.next(), xy.next());
                 }
                 System.out.println();
